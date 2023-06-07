@@ -41,9 +41,9 @@ def login_menu():
                     try:
                         cursor.execute("SELECT * FROM accounts WHERE account_number = %s", (account_number,))
                         user = cursor.fetchone()
-                        sender_email = "atmtranscation@gmail.com"
+                        sender_email = "sender_email"
                         receiver_email = user[4] # email is stored in the 4th column of the accounts table
-                        password ="ugqz qxtn ocrd vwuz"
+                        password =""
                         message = f"Subject: Maximum OTP Attempts Exceeded\n\nDear Account Holder,\n\nThe maximum number of OTP attempts has been exceeded for your account ({account_number}). Please contact customer support for assistance.\n\nThank you,\nATM Team"
                         with smtplib.SMTP('smtp.gmail.com', 587) as server:
                             server.starttls()
@@ -200,9 +200,9 @@ def add_transaction(account_id, transaction_type, amount, account_number):
     # Send email to user with transaction details
     cursor.execute("SELECT * FROM accounts WHERE account_number = %s", (account_number,))
     user = cursor.fetchone()
-    sender_email = "atmtranscation@gmail.com"
+    sender_email = "sender_email"
     receiver_email = user[4] # email is stored in the 4th column of the accounts table
-    password ="ugqz qxtn ocrd vwuz"
+    password =""
     message = "Subject: Transaction Details\n\nDear " + user[1] + ",\n\nYour " + transaction_type.lower() + " of Rs." + str(amount) + " has been processed. Your current balance is Rs." + str(get_balance(account_id)) + ".\n\nThank you for using our ATM.\n\nBest regards,\nThe ATM Team"
     with smtplib.SMTP('smtp.gmail.com', 587) as server:
         server.starttls()
@@ -225,8 +225,8 @@ def send_otp(account_number):
     otp = str(random.randint(100000, 999999))
     subject = "ATM Withdrawal OTP"
     message = "Your OTP is: " + otp
-    sender_email = "atmtranscation@gmail.com"
-    sender_password ="ugqz qxtn ocrd vwuz"
+    sender_email = "sender_email"
+    sender_password =""
     try:
         server = smtplib.SMTP('smtp.gmail.com', 587)
         server.starttls()
